@@ -1,4 +1,4 @@
-<h1 align="center">🤖 RoboWorld Challenge 2026: Track 1 WorldNav <br> Language-Conditioned World Navigation</h1>
+<h1 align="center">🤖 RoboWorld 2026: Track 1 WorldNav <br> Language-Conditioned World Navigation</h1>
 
 <div align="center">
 
