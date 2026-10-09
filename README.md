@@ -1,24 +1,23 @@
-<h1 align="center">🤖 RoboWorld 2026: Track 1 WorldNav <br> Language-Conditioned World Navigation</h1>
+<h1 align="center">🤖 RoboWorld 2026 Track 1: WorldNav<br>Language-Conditioned World Navigation</h1>
 
-<div align="center">
+<div align="center" markdown="1">
 
-**Official Track Documentation for [Track 1](https://f1y1113.github.io/worldnav-challenge/)**
+**Official participant toolkit for RoboWorld 2026 Track 1**
 
-*Built on the LCVN benchmark — "Language-Conditioned World Modeling for Visual Navigation"*<br>([LCVN repository](https://github.com/F1y1113/LCVN) | [LCVN dataset](https://huggingface.co/datasets/fly1113/LCVN) | [LCVN paper](https://arxiv.org/abs/2603.26741))
+*Built on the [LCVN benchmark](https://github.com/UWMILab/LCVN) and affiliated with the [RoboPAD Workshop at NeurIPS 2026](https://robotpad2026.github.io/)*
 
 [![RoboWorld](https://img.shields.io/badge/RoboWorld-2026-blue)](https://roboworld2026.github.io/)
-[![Track 1](https://img.shields.io/badge/Track-WorldNav-green)](https://f1y1113.github.io/worldnav-challenge/)
-[![RoboPAD Workshop](https://img.shields.io/badge/NeurIPS_2026-RoboPAD_Workshop-red)](https://robotpad2026.github.io/)
+[![Track 1](https://img.shields.io/badge/Track_1-WorldNav-green)](https://roboworld2026.github.io/track1)
 [![CodaBench](https://img.shields.io/badge/CodaBench-Submit-purple)](https://www.codabench.org/competitions/18185/)
+[![RoboPAD](https://img.shields.io/badge/Affiliated_with-RoboPAD_2026-red)](https://robotpad2026.github.io/)
 [![Dataset](https://img.shields.io/badge/Dataset-LCVN-yellow)](https://huggingface.co/datasets/fly1113/LCVN)
-[![Paper](https://img.shields.io/badge/arXiv-2603.26741-red)](https://arxiv.org/abs/2603.26741)
+[![Paper](https://img.shields.io/badge/arXiv-2603.26741-b31b1b)](https://arxiv.org/abs/2603.26741)
 
 <p align="center">
   <img src="./assets/track1-worldnav-poster.png" alt="RoboWorld 2026 Track 1: WorldNav Poster" width="460"/>
 </p>
 
 **🏆 Awards: Official Certificates for Top 5 Teams & NeurIPS 2026 RoboPAD Workshop Oral Presentations**
-
 
 </div>
 
@@ -28,8 +27,10 @@
 **WorldNav** invites participants to develop world-model-based or vision-language-action (VLA) agents for **language-conditioned visual navigation**. Given a single initial egocentric RGB observation and a natural-language instruction, the agent must generate the full future navigation trajectory without a goal image or intermediate environmental feedback. The track encourages methods that couple imagination with control: world models that predict future observations to guide action selection, unified autoregressive models that interleave observation and action prediction, and VLA models that map vision and language to navigation actions. Policy-only methods are also welcome.
 
 <p align="center">
-  <img src="assets/figure1-teaser.png" alt="LCVN overview" width="85%" />
+  <img src="assets/figure1-teaser.png" alt="Language-conditioned visual navigation with LCVN" width="85%" />
 </p>
+
+
 
 ### 🎯 Task Definition
 
@@ -41,6 +42,10 @@
 | **Setting** | Open-loop generation: no goal image or intermediate environmental feedback is available. |
 
 Agents may generate the trajectory autoregressively, using their own predicted future observations or states to plan subsequent actions. The instruction remains the navigation goal throughout the rollout.
+
+<p align="center">
+  <img src="assets/figure4-qualitative.png" alt="Qualitative comparison of world-model navigation on the LCVN validation seen split" width="85%" />
+</p>
 
 ## 📅 Competition Details
 
@@ -272,28 +277,30 @@ Include every episode in the official manifest exactly once. Phase 1 requires 10
 
 Check the CodaBench scoring log. A `SUBMISSION REJECTED:` message identifies a submission issue, such as missing episodes, duplicate identifiers, or an incorrect archive layout. Correct the reported issue and resubmit. A `SCORING DATA ERROR (organizer):` message indicates an organizer-side problem; report it to the competition contact email below.
 
-## 🔗 Contact and Resources
-
-For technical or competition questions, contact [roboworld2026@outlook.com](mailto:roboworld2026@outlook.com).
+## 🔗 Resources and Contact
 
 | Resource | Link |
 |:--|:--|
-| Official Track 1 Website | [RoboWorld 2026 Track 1: WorldNav](https://roboworld2026.github.io/track1) |
-| Official Challenge Portal & Registration | [RoboWorld 2026 Registration (Google Form)](https://roboworld2026.github.io/#registration) |
-| Official Awards & Recognition | [RoboWorld 2026 Awards](https://roboworld2026.github.io/#awards) |
-| Track 2 (HA-VLN 2.0) Website | [RoboWorld 2026 Track 2: HA-VLN 2.0](https://roboworld2026.github.io/track2) |
-| Associated Workshop | [RoboPAD at NeurIPS 2026](https://robotpad2026.github.io/) |
-| CodaBench Competition Portal | [CodaBench #18185](https://www.codabench.org/competitions/18185/) |
-| GitHub Repository | [worldnav-challenge](https://github.com/F1y1113/worldnav-challenge) |
-| Track Project Page | [WorldNav](https://f1y1113.github.io/worldnav-challenge/) |
-| Metric calculation demonstration | [demonstration.py](demonstration.py) |
-| Baseline implementation | [LCVN repository](https://github.com/F1y1113/LCVN) |
+| Challenge Website | [RoboWorld 2026](https://roboworld2026.github.io) |
+| Official Track 1 Website | [RoboWorld 2026 — Track 1: WorldNav](https://roboworld2026.github.io/track1) |
+| Track 1 Repository | [worldnav-challenge](https://github.com/F1y1113/worldnav-challenge) |
+| Evaluation & Leaderboard | [CodaBench Competition #18185](https://www.codabench.org/competitions/18185/) |
 | Dataset | [LCVN on Hugging Face](https://huggingface.co/datasets/fly1113/LCVN) |
-| Paper | [Language-Conditioned World Modeling for Visual Navigation](https://arxiv.org/abs/2603.26741) |
+| Baseline Implementation | [LCVN Repository](https://github.com/UWMILab/LCVN) |
 
-## 📄 License and Terms
+For technical support, use [GitHub Issues](https://github.com/F1y1113/worldnav-challenge/issues).  
+For event and registration questions, email [roboworld2026@gmail.com](mailto:roboworld2026@gmail.com).
 
-Refer to the [LCVN repository](https://github.com/F1y1113/LCVN), [dataset page](https://huggingface.co/datasets/fly1113/LCVN), and original source datasets for the applicable code and data licenses. Participation is governed by the Track 1 Terms and Conditions on [CodaBench](https://www.codabench.org/competitions/18185/).
+### 💬 Community & Discussion
+
+- **Discord:** [Join the RoboWorld Track 1 Discord](https://discord.gg/gv2yW3TaA)
+- **WeChat Group:** [Join the RoboWorld Track 1 WeChat Group](https://github.com/roboworld2026/roboworld2026.github.io/blob/main/wechat_track1.JPG)
+
+<a href="https://github.com/roboworld2026/roboworld2026.github.io/blob/main/wechat_track1.JPG" target="_blank"><img src="https://raw.githubusercontent.com/roboworld2026/roboworld2026.github.io/main/wechat_track1.JPG" alt="Track 1 WeChat Group QR Code" width="220" /></a>
+
+## 📄 Terms and Conditions
+
+Participation is governed by the official Terms & Conditions on [CodaBench](https://www.codabench.org/competitions/18185/).
 
 ## 📚 Citation
 
