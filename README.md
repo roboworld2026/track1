@@ -60,7 +60,9 @@ Agents may generate the trajectory autoregressively, using their own predicted f
 | **Phase 1: Validation** | Released `val_seen` and `val_unseen` splits | Ranked by the mean of the `val_seen` and `val_unseen` Scores (50% each). Both split files are required. |
 | **Phase 2: Final Evaluation** | Held-out test split | Ranked by the test Score. |
 
-**Phase 1 supports method development and validation; it does not determine shortlisting, final rankings, or awards. Final rankings and awards are determined entirely by the Phase 2 test Score.** Scores from the two phases are not combined.
+**Phase 1 supports method development and validation; it does not determine shortlisting, final rankings, or awards. Final rankings and awards are determined entirely by the Phase 2 test Score.** Scores from the two phases are not combined. Phase 1 remains open for validation submissions during Phase 2.
+
+[Download Phase 2 Test Dataset](https://drive.google.com/drive/folders/1QWGsRBB8KlS_v9Jf0S51C3SpKltL_ZPL?usp=sharing).
 
 ### 🗓️ Timeline
 
@@ -68,7 +70,8 @@ Agents may generate the trajectory autoregressively, using their own predicted f
 |:--|:--|
 | Team registration opens (Google Form) | October 08, 2026 |
 | Phase 1: Validation opens | October 15, 2026, 00:00 UTC |
-| Phase 1 closes / Phase 2 opens | October 30, 2026, 23:59 UTC |
+| Phase 1: Validation closes | November 30, 2026, 23:59 UTC |
+| Phase 2: Final Evaluation opens | October 31, 2026, 00:00 UTC |
 | Final submission deadline (Phase 2) | November 30, 2026, 23:59 UTC |
 | Awards announcement | December 12, 2026 (RoboPAD Workshop @ NeurIPS 2026) |
 
@@ -83,12 +86,12 @@ Official challenge awards are aligned with the [RoboWorld 2026 Awards & Recognit
 
 ## 📊 Dataset
 
-The track uses the **LCVN dataset**, comprising **39,016 trajectories** and **117,048 human-verified instructions** sourced from Go Stanford, ReCon, SCAND, HuRoN, and TartanDrive.
+The track uses the **LCVN dataset**, comprising **39,016 trajectories** sourced from Go Stanford, ReCon, SCAND, HuRoN, and TartanDrive.
 
-Each trajectory is paired with three instruction styles:
+The instructions cover three styles:
 
 - **Concise:** Short instructions containing essential directional cues.
-- **Intricate:** Detailed instructions describing visual context, objects, people, and scene layout.
+- **Intricate:** Route instructions enriched with detailed descriptions of the surrounding scene.
 - **Landmark-grounded:** Instructions anchored to salient environmental landmarks.
 
 ### Dataset Splits
@@ -103,7 +106,7 @@ Each trajectory is paired with three instruction styles:
 
 Go Stanford, ReCon, SCAND, and HuRoN provide the training and in-domain evaluation data. The unseen validation split is drawn exclusively from TartanDrive. The test split contains trajectories from both TartanDrive and in-domain sources.
 
-The training and validation splits are available on [Hugging Face](https://huggingface.co/datasets/fly1113/LCVN). Phase 2 provides the test inference inputs: initial RGB observations and language instructions. Reference test trajectories and target annotations remain withheld for official evaluation.
+Training and validation data are available on [Hugging Face](https://huggingface.co/datasets/fly1113/LCVN). Phase 2 provides initial RGB observations and instructions; reference test trajectories remain withheld.
 
 ## 🚀 Getting Started
 
@@ -112,7 +115,7 @@ The training and validation splits are available on [Hugging Face](https://huggi
 From this track repository, run:
 
 ```bash
-# Download and extract all released splits.
+# Download and extract training and validation splits.
 bash download_data.sh
 
 # Alternatively, download only the Phase 1 validation splits.
@@ -147,11 +150,11 @@ Each `{trajectory_id}/` folder contains a sequence of egocentric RGB frames (`0.
 Clone the LCVN implementation:
 
 ```bash
-git clone https://github.com/F1y1113/LCVN.git
+git clone https://github.com/UWMILab/LCVN.git
 cd LCVN
 ```
 
-Follow the model-specific environment setup, data preparation, training, and inference instructions in the [LCVN README](https://github.com/F1y1113/LCVN#readme). LCVN-Uni and LCVN-WM + LCVN-AC use separate environments.
+Follow the model-specific environment setup, data preparation, training, and inference instructions in the [LCVN README](https://github.com/UWMILab/LCVN#readme). LCVN-Uni and LCVN-WM + LCVN-AC use separate environments.
 
 ### 3. Prepare a Submission
 
@@ -166,7 +169,7 @@ Two complementary LCVN approaches serve as the reference baselines:
 | **LCVN-Uni** | A unified autoregressive multimodal model fine-tuned from Anole-7B that jointly predicts the next action and next observation in a single forward pass. |
 | **LCVN-WM + LCVN-AC** | A language-conditioned diffusion world model paired with an actor-critic agent trained entirely in the world model's latent space using intrinsic rollout rewards. |
 
-Implementations and usage instructions are provided in the [LCVN repository](https://github.com/F1y1113/LCVN). See the [LCVN paper](https://arxiv.org/abs/2603.26741) for details.
+Implementations and usage instructions are provided in the [LCVN repository](https://github.com/UWMILab/LCVN). See the [LCVN paper](https://arxiv.org/abs/2603.26741) for details.
 
 ## 📏 Evaluation
 
@@ -197,7 +200,7 @@ $$
 
 ## 📥 Submission Format
 
-Submit predictions as **one ZIP archive** through [CodaBench](https://www.codabench.org/competitions/18185/).
+Submit predicted action sequences as **one ZIP archive** through [CodaBench](https://www.codabench.org/competitions/18185/).
 
 | Phase | Required files at the ZIP archive root |
 |:--|:--|
@@ -210,10 +213,10 @@ The example below illustrates the JSON structure with one episode and three moti
 
 ```json
 {
-  "split": "val_unseen",
+  "split": "test",
   "episodes": [
     {
-      "episode_id": "20210826_40_0001_02_0",
+      "episode_id": "LCVN_test_00001",
       "actions": [[0.25, 0.0, 0.0], [0.0, 0.0, 0.15], [0.12, -0.05, 0.0]]
     }
   ]
@@ -245,11 +248,11 @@ For **Phase 2**, create a separate archive:
 zip -j submission_test.zip test.json
 ```
 
-Place only the required JSON files at the archive root; do not include a parent directory or unrelated files. Upload the archive to the corresponding CodaBench phase, then check the scoring log for validation results and evaluation metrics.
+Place only the required JSON files at the archive root; do not include a parent directory or unrelated files. Upload the archive to the corresponding CodaBench phase, then check **My Submissions** for status and scores.
 
 ### Submission Limits
 
-Each participant may submit **100 times per day** and **100 times in total per phase**. The leaderboard retains the team's best-scoring submission.
+Each phase allows **5 submissions per day and 200 in total per participant**. The leaderboard retains the team's best-scoring submission.
 
 ## ❓ Frequently Asked Questions
 
@@ -271,11 +274,11 @@ No. Phase 2 provides the initial observations and instructions needed for infere
 
 **5. Which episodes must my submission include?**
 
-Include every episode in the official manifest exactly once. Phase 1 requires 10,806 `val_seen` episodes and 4,500 `val_unseen` episodes, covering the three instruction styles. Copy episode identifiers directly from the manifests.
+Include every episode in the official manifest exactly once. Phase 1 requires 10,806 `val_seen` episodes and 4,500 `val_unseen` episodes, covering the three instruction styles. Phase 2 requires all 15,303 test episodes, using the test folder names as episode identifiers.
 
 **6. What should I do if my submission is rejected?**
 
-Check the CodaBench scoring log. A `SUBMISSION REJECTED:` message identifies a submission issue, such as missing episodes, duplicate identifiers, or an incorrect archive layout. Correct the reported issue and resubmit. A `SCORING DATA ERROR (organizer):` message indicates an organizer-side problem; report it to the competition contact email below.
+Compare the archive root, episode IDs, and JSON fields with the downloadable example ZIP. Check My Submissions for status or error messages. If the problem persists, contact the competition email below.
 
 ## 🔗 Resources and Contact
 
@@ -283,12 +286,12 @@ Check the CodaBench scoring log. A `SUBMISSION REJECTED:` message identifies a s
 |:--|:--|
 | Challenge Website | [RoboWorld 2026](https://roboworld2026.github.io) |
 | Official Track 1 Website | [RoboWorld 2026 — Track 1: WorldNav](https://roboworld2026.github.io/track1) |
-| Track 1 Repository | [worldnav-challenge](https://github.com/F1y1113/worldnav-challenge) |
+| Track 1 Repository | [WorldNav Track 1](https://github.com/roboworld2026/track1) |
 | Evaluation & Leaderboard | [CodaBench Competition #18185](https://www.codabench.org/competitions/18185/) |
 | Dataset | [LCVN on Hugging Face](https://huggingface.co/datasets/fly1113/LCVN) |
 | Baseline Implementation | [LCVN Repository](https://github.com/UWMILab/LCVN) |
 
-For technical support, use [GitHub Issues](https://github.com/F1y1113/worldnav-challenge/issues).  
+For technical support, use [GitHub Issues](https://github.com/roboworld2026/track1/issues).<br>
 For event and registration questions, email [roboworld2026@gmail.com](mailto:roboworld2026@gmail.com).
 
 ### 💬 Community & Discussion
